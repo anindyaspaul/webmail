@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="post" action="{% url 'compose' %}">
+  {% if success is True %}
+  <p>Email sent successfully.</p>
+  {% endif %}
+  {{ form.non_field_errors }}
+
+  {% csrf_token %}
+
+  <div class="form-group">
+    {{ form.to.errors }}
+    <label for="{{ form.to.id_for_label }}">{{ form.to.label }}</label>
+    <input type="email" class="form-control" id="{{ form.to.id_for_label }}" name="{{ form.to.html_name }}" placeholder="Enter email">
+  </div>
+
+  <div class="form-group">
+    {{ form.subject.errors }}
+    <label for="{{ form.subject.id_for_label }}">{{ form.subject.label }}</label>
+    <input type="text" class="form-control" id="{{ form.subject.id_for_label }}" name="{{ form.subject.html_name }}" placeholder="Enter subject">
+  </div>
+
+  <div class="form-group">
+    {{ form.message.errors }}
+    <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
+    <textarea class="form-control" id="{{ form.message.id_for_label }}" name="{{ form.message.html_name }}" placeholder="Enter message"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

@@ -131,3 +131,13 @@ STATICFILES_DIRS = [
 LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv('SMTP_EMAIL_HOST')
+EMAIL_HOST_PASSWORD = os.getenv('SMTP_EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = os.getenv('SMTP_EMAIL_HOST_USER')
+EMAIL_PORT = os.getenv('SMTP_EMAIL_PORT')
+EMAIL_USE_TLS = os.getenv('SMTP_EMAIL_USE_TLS')
+DEFAULT_FROM_EMAIL = os.getenv('SMTP_DEFAULT_FROM_EMAIL')
+

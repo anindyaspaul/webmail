@@ -17,6 +17,7 @@ services:
         env_file:
             - .envs/base.env
             - .envs/django.env
+            - .envs/mail.env
         ports:
             - "8000:8000"
         volumes:
