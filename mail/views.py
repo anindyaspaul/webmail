@@ -69,10 +69,15 @@ class MessageView(View):
         ) as imbox:
             imap_message = imbox.messages(uid__range=f'{message_id}:{message_id+1}')[0][1]
 
+
+        message = imap_message.body.get('html')
+        if len(message) == 0:
+            message = imap_message.body.get('plain')
+
         return render(request, self.template_name, { 
             'from': imap_message.sent_from[0],
             'date': imap_message.date,
             'subject': imap_message.subject,
-            'message': imap_message.body.get('html')[0]
+            'message': message[0]
         })
 
