@@ -20,7 +20,7 @@ class HomeView(View):
             imap_messages = reversed(imbox.messages()[-5:])
             for message_id, message in imap_messages:
                 messages.append({
-                    'id': message_id,
+                    'id': int(message_id),
                     'sent_from': message.sent_from[0],
                     'sent_to': message.sent_to,
                     'subject': message.subject,
@@ -54,3 +54,21 @@ class ComposeView(View):
             form = MailForm()
 
         return render(request, self.template_name, { 'form': form, 'success': success })
+
+
+class MessageView(View):
+    template_name = 'message.html'
+    
+    def get(self, request):
+        message_id = int(request.GET['id'])
+        imap_message = None
+        with Imbox(settings.IMAP_HOST,
+            username=settings.IMAP_USER,
+            password=settings.IMAP_PASSWORD,
+            ssl=settings.IMAP_USE_SSL,
+        ) as imbox:
+            imap_message = imbox.messages(uid__range=f'{message_id}:{message_id+1}')[0][1]
+
+        print(imap_message.body.get('html')[0])
+        return render(request, self.template_name, { 'message': imap_message.body.get('html')[0]})
+
