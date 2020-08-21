@@ -2,6 +2,18 @@
 
 {% block content %}
 
+<p>
+From: {{ from.email }}
+</p>
+
+<p>
+Date: {{ date }}
+</p>
+
+<p>
+Subject: {{ subject }}
+</p>
+
 {{ message | safe }}
 
 {% endblock %}
