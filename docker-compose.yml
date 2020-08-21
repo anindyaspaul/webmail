@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+    demodesk-postgres:
+        image: postgres:12
+        container_name: "demodesk-postgres"
+        env_file:
+            - .envs/base.env
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+
+    demodesk-django:
+        build: .
+        container_name: "demodesk-django"
+        env_file:
+            - .envs/base.env
+            - .envs/django.env
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/demodesk
+        depends_on:
+            - demodesk-postgres
+        
+volumes:
+    postgres-data:
