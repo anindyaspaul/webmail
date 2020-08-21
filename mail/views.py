@@ -2,13 +2,35 @@ from django.shortcuts import render
 from django.views import View
 from mail.forms import MailForm
 from django.core.mail import send_mail
+from imbox import Imbox
+from django.conf import settings
+from datetime import datetime
 
 
 class HomeView(View):
-    template_name = 'base.html'
+    template_name = 'inbox.html'
     
     def get(self, request):
-        return render(request, self.template_name)
+        messages = []
+        with Imbox(settings.IMAP_HOST,
+            username=settings.IMAP_USER,
+            password=settings.IMAP_PASSWORD,
+            ssl=settings.IMAP_USE_SSL,
+        ) as imbox:
+            imap_messages = reversed(imbox.messages()[-5:])
+            for message_id, message in imap_messages:
+                messages.append({
+                    'id': message_id,
+                    'sent_from': message.sent_from[0],
+                    'sent_to': message.sent_to,
+                    'subject': message.subject,
+                    'date': message.date,
+                    'body_plain': message.body.get('plain'),
+                    'body_html': message.body.get('html', message.body.get('plain')),
+                })
+
+        return render(request, self.template_name, { 'messages': messages })
+
 
 
 class ComposeView(View):

@@ -4,8 +4,11 @@
 
 <form method="post" action="{% url 'compose' %}">
   {% if success is True %}
-  <p>Email sent successfully.</p>
+  <div class="alert alert-success" role="alert">
+    Email sent successfully.
+  </div>
   {% endif %}
+
   {{ form.non_field_errors }}
 
   {% csrf_token %}
