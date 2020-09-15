@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-    demodesk-postgres:
+    webmail-postgres:
         image: postgres:12
-        container_name: "demodesk-postgres"
+        container_name: "webmail-postgres"
         env_file:
             - .envs/base.env
         ports:
@@ -11,19 +11,19 @@ services:
         volumes:
             - postgres-data:/var/lib/postgresql/data
 
-    demodesk-django:
+    webmail-django:
         build: .
-        container_name: "demodesk-django"
+        container_name: "webmail-django"
         env_file:
             - .envs/base.env
             - .envs/django.env
-            - .envs/mail.env
+            - .envs/email.env
         ports:
             - "8000:8000"
         volumes:
-            - .:/demodesk
+            - .:/webmail
         depends_on:
-            - demodesk-postgres
+            - webmail-postgres
         
 volumes:
     postgres-data:

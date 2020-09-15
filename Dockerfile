@@ -2,11 +2,10 @@ FROM python:3.8
 
 RUN apt-get update
 
-COPY . /demodesk
+COPY . /webmail
 
-WORKDIR /demodesk
+WORKDIR /webmail
 
 RUN pip install -r requirements.txt
 
 ENTRYPOINT ["bash", "entrypoint.sh"]
-
