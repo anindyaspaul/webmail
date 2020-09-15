@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'mail',
+    'webmail',
 ]
 
 MIDDLEWARE = [
@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.getenv('POSTGRES_HOST', 'demodesk-postgres'),
+        'HOST': os.getenv('POSTGRES_HOST', 'webmail-postgres'),
         'PORT': os.getenv('POSTGRES_PORT', '5432'),
-        'NAME': os.getenv('POSTGRES_DB', 'demodesk'),
-        'USER': os.getenv('POSTGRES_USER', 'demodesk'),
+        'NAME': os.getenv('POSTGRES_DB', 'webmail'),
+        'USER': os.getenv('POSTGRES_USER', 'webmail'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'vF@GakAW!TXWr^ew'),
     }
 }
