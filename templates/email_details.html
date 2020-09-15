@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="table table-sm">
+    <tbody>
+        <tr>
+            <td>From</td>
+            <td>
+                {% for sent_from in sent_froms %}
+                {{ sent_from.name }} &lt;{{ sent_from.email }}&gt;
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>To</td>
+            <td>
+                {% for sent_to in sent_tos %}
+                {{ sent_to.name }} &lt;{{ sent_to.email }}&gt;
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td>
+                {{ date }}
+            </td>
+        </tr>
+        <tr>
+            <td>Subject</td>
+            <td>
+                {{ subject }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr /> 
+
+{{ body | safe }}
+
+{% endblock %}

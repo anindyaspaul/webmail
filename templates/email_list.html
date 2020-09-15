@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link" href="{% url 'home' %}"><<</a></li>
+    {% if page.has_previous %}
+    <li class="page-item"><a class="page-link" href="{% url 'home' %}?page={{ page.previous_page_number }}"><</a></li>
+    {% endif %}
+    <li class="page-item"><a class="page-link" disabled>{{ page.number }}</a></li>
+    {% if page.has_next %}
+    <li class="page-item"><a class="page-link" href="{% url 'home' %}?page={{ page.next_page_number }}">></a></li>
+    {% endif %}
+    <li class="page-item"><a class="page-link" href="{% url 'home' %}?page={{ last_page_number }}">>></a></li>
+  </ul>
+</nav>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">From</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for msg in page.object_list %}
+    <tr>
+      {% for sent_from in msg.sent_from %}
+      <td>{{ sent_from.email }}</td>
+      {% endfor %}
+      <td><a href="{% url 'details' %}?id={{ msg.id }}">{{ msg.subject }}</a></td>
+      <td>{{ msg.sent_on }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}
